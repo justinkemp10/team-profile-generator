@@ -1,75 +1,172 @@
-// TODO: Include packages needed for this application
+// TODO:
+const Manager = require("./classes/manager");
+const Engineer = require("./classes/engineer");
+const Intern = require("./classes/intern");
 const fs = require("fs");
 const inquirer = require("inquirer");
 const jest = require("jest");
 
-const generateMarkdown = require("./utils/generateMarkdown");
+const generateMarkdown = require("./classes/generateMarkdown");
 
-// TODO: Create an array of questions for user input
-const questions = [{
-    type: 'input',
-    message: 'What is your name?',
-    name: 'name',
-  },
-  {
-    type: 'input',
-    message: 'What is the description?',
-    name: 'description',
-  },
-  {
-    type: 'input',
-    message: 'What are the installation instructions?',
-    name: 'installInstructions',
-  },
-  {
-    type: 'input',
-    message: 'What is the usage information?'  ,
-    name: 'usageInformation',
-  },
-  {
-    type: 'input',
-    message: 'What are the contribution guidelines?',
-    name: 'guidelines',
-  },
-  {
-    type: 'input',
-    message: 'What are the test instructions?',
-    name: 'testInstructions',
-  },
-  {
-    type: 'list',
-    message: 'Choose a license for my application:',
-    choices: ["Apache", "BSD 3", "MIT"],
-    name: 'license',
-  },
-  {
-    type: 'input',
-    message: 'What is your GitHub username?',
-    name: 'github',
-  },
-  {
-    type: 'input',
-    message: 'What is your email address?',
-    name: 'email',
-  }
-];
+const employees = [];
 
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {
-//     fs.writeFile(fileName, generateMarkdown(data), (err) => {
-//         if (err) throw err;
-//         console.log('The README has been generated successfully.');
-//     });
-// }
+// TODO:
+
+addManager();
+
+function addManager() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: "What is your name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: 'What is your Manager ID number?',
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: 'What is your office number?',
+            name: 'officeNumber',
+        },
+    ])
+    .then((res) => {
+        const mgr = new Manager(
+            res.name,
+            res.id,
+            res.enail,
+            res.officeNumber
+        );
+        console.log("Manager Info: " + mgr);
+        inquireTeam();
+    });
+};
+
+function inquireTeam() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: "Would you like to add another team member?",
+            choices: ["Yes", "No"],
+            name: 'teamMember',
+        }
+    ])
+    .then((res) => {
+        if (res.choices === "Yes") {
+            addTeamMember();
+        } else {
+            renderHtml();
+        }
+    })
+}
+
+function addTeamMember() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: "What position does the team member hold?",
+            choices: ["Engineer", "Intern"],
+            name: 'position',
+        }
+    ])
+    .then((res) => {
+        if (res.choices === "Engineer") {
+            addEngineer();
+        } else {
+            addIntern();
+        }
+    })
+}
+
+function addEngineer() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: "What is your name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: 'What is your ID number?',
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: 'What is your GitHub username?',
+            name: 'github',
+        },
+    ])
+    .then((res) => {
+        const eng = new Engineer(
+            res.name = name,
+            res.id = id,
+            res.email = email,
+            res.github = github
+        );
+        console.log("Engineer: " + eng);
+        inquireTeam();
+    })
+};
+
+function addIntern() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: "What is your name?",
+            name: 'name',
+        },
+        {
+            type: 'input',
+            message: 'What is your ID number?',
+            name: 'id',
+        },
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: 'What school do you currently attend?',
+            name: 'school',
+        },
+    ])
+    .then((res) => {
+        const int = new Intern(
+            res.name = name,
+            res.id = id,
+            res.email = email,
+            res.school = school
+        );
+        console.log("Intern: " + int);
+        inquireTeam();
+    });
+};
+
+// TODO: Create a function to write html file
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, generateMarkdown(data), (err) => {
+        if (err) throw err;
+        console.log('The webpage has been generated successfully.');
+    });
+}
 
 // TODO: Create a function to initialize app
-// function init() {
-//     inquirer.prompt(questions)
-//     .then(function(answers) {
-//         console.log(answers);
-//         writeToFile('README.MD', answers);
-//     })
-// }
+function init() {
+    writeToFile('profile.html', answers);
+}
 
 // Function call to initialize app
-// init();
+init();
