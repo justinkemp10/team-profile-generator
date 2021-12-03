@@ -1,4 +1,5 @@
 // TODO:
+const Employee = require("./classes/employee");
 const Manager = require("./classes/manager");
 const Engineer = require("./classes/engineer");
 const Intern = require("./classes/intern");
@@ -12,8 +13,6 @@ const employees = [];
 
 // TODO:
 
-addManager();
-
 function addManager() {
     inquirer.prompt([
         {
@@ -23,7 +22,7 @@ function addManager() {
         },
         {
             type: 'input',
-            message: 'What is your Manager ID number?',
+            message: "What is your Manager's ID number?",
             name: 'id',
         },
         {
@@ -41,10 +40,11 @@ function addManager() {
         const mgr = new Manager(
             res.name,
             res.id,
-            res.enail,
+            res.email,
             res.officeNumber
         );
-        console.log("Manager Info: " + mgr);
+        employees.push(mgr);
+        // console.log("Manager Info: " + mgr);
         inquireTeam();
     });
 };
@@ -55,14 +55,14 @@ function inquireTeam() {
             type: 'list',
             message: "Would you like to add another team member?",
             choices: ["Yes", "No"],
-            name: 'teamMember',
+            name: 'prompt',
         }
     ])
     .then((res) => {
-        if (res.choices === "Yes") {
+        if (res.prompt === "Yes") {
             addTeamMember();
         } else {
-            renderHtml();
+            writeToFile('profile.html', employees);
         }
     })
 }
@@ -72,15 +72,17 @@ function addTeamMember() {
         {
             type: 'list',
             message: "What position does the team member hold?",
-            choices: ["Engineer", "Intern"],
+            choices: ["Engineer", "Intern", "Manager"],
             name: 'position',
         }
     ])
     .then((res) => {
-        if (res.choices === "Engineer") {
+        if (res.position === "Engineer") {
             addEngineer();
-        } else {
+        } else if (res.position === "Intern") {
             addIntern();
+        } else {
+            addManager();
         }
     })
 }
@@ -110,12 +112,13 @@ function addEngineer() {
     ])
     .then((res) => {
         const eng = new Engineer(
-            res.name = name,
-            res.id = id,
-            res.email = email,
-            res.github = github
+            res.name,
+            res.id,
+            res.email,
+            res.github
         );
-        console.log("Engineer: " + eng);
+        employees.push(eng);
+        // console.log("Engineer: " + eng);
         inquireTeam();
     })
 };
@@ -145,12 +148,13 @@ function addIntern() {
     ])
     .then((res) => {
         const int = new Intern(
-            res.name = name,
-            res.id = id,
-            res.email = email,
-            res.school = school
+            res.name,
+            res.id,
+            res.email,
+            res.school
         );
-        console.log("Intern: " + int);
+        employees.push(int);
+        // console.log("Intern: " + int);
         inquireTeam();
     });
 };
@@ -161,12 +165,7 @@ function writeToFile(fileName, data) {
         if (err) throw err;
         console.log('The webpage has been generated successfully.');
     });
-}
+};
 
-// TODO: Create a function to initialize app
-function init() {
-    writeToFile('profile.html', answers);
-}
 
-// Function call to initialize app
-init();
+addManager();
