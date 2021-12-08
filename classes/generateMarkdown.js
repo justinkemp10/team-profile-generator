@@ -1,6 +1,23 @@
+const Engineer = require("./engineer");
+const Intern = require("./intern");
+const Manager = require("./manager");
+
 // TODO: Create a function to generate markdown for html page
 function generateMarkdown(data) {
     console.log('In GenerateMarkdown:', data);
+    
+    for (var i = 0; i < data.length; i++) {
+        console.log('Employees: ', data[i]);
+        if (data[i] === Manager) {
+            managerRender();
+        }
+        else if (data[i] === Engineer) {
+            engineerRender();
+        }
+        else if (data[i] === Intern) {
+            internRender();
+        }
+    }
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -15,25 +32,73 @@ function generateMarkdown(data) {
     </head>
     <body class="min-100-vh flex-column">
     <main class="flex-row justify-center align-center col-auto p-4 bg-light">
-        <div class="card" style="width: 14rem;">
-            <div class="card-header bg-primary text-white font-weight-bold">
-                <h3>Name</h3>
-                <h5>Job Title</h5>
-            </div>
-            <div class="card-body d-flex justify-content-center">
-                <div class="card" style="width: 11rem;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">An item</li>
-                        <li class="list-group-item">A second item</li>
-                        <li class="list-group-item">A third item</li>
-                    </ul>
-                </div>
-            </div>
+        <div id="div" class="card card-container" style="width: 14rem;">
+            ${data.res}
         </div>
     </main>
     </body>
 </html>
     `
 };
+
+function managerRender(res) {
+    return `
+    <div class="card" style="width: 14rem;">
+        <div class="card-header bg-primary text-white font-weight-bold">
+            <h3>${res.name}</h3>
+            <h5>Manager</h5>
+        </div>
+        <div class="card-body d-flex justify-content-center card-container">
+            <div class="card" style="width: 11rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${res.id}</li>
+                    <li class="list-group-item">Email: ${res.email}</li>
+                    <li class="list-group-item">Office Number: ${res.officeNumber}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `
+};
+
+function engineerRender(res) {
+    return `
+    <div class="card" style="width: 14rem;">
+        <div class="card-header bg-primary text-white font-weight-bold">
+            <h3>${res.name}</h3>
+            <h5>Engineer</h5>
+        </div>
+        <div class="card-body d-flex justify-content-center card-container">
+            <div class="card" style="width: 11rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${res.id}</li>
+                    <li class="list-group-item">Email: ${res.email}</li>
+                    <li class="list-group-item">GitHub: ${res.github}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `
+};
+
+function internRender(res) {
+    return `
+    <div class="card" style="width: 14rem;">
+        <div class="card-header bg-primary text-white font-weight-bold">
+            <h3>${res.name}</h3>
+            <h5>Intern</h5>
+        </div>
+        <div class="card-body d-flex justify-content-center card-container">
+            <div class="card" style="width: 11rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${res.id}</li>
+                    <li class="list-group-item">Email: ${res.email}</li>
+                    <li class="list-group-item">School: ${res.school}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `
+};
   
-  module.exports = generateMarkdown;
+module.exports = generateMarkdown;

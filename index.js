@@ -118,7 +118,6 @@ function addEngineer() {
             res.github
         );
         employees.push(eng);
-        // console.log("Engineer: " + eng);
         inquireTeam();
     })
 };
@@ -154,7 +153,6 @@ function addIntern() {
             res.school
         );
         employees.push(int);
-        // console.log("Intern: " + int);
         inquireTeam();
     });
 };
@@ -164,6 +162,7 @@ function writeToFile(fileName, data) {
     fs.writeFile(fileName, generateMarkdown(data), (err) => {
         if (err) throw err;
         console.log('The webpage has been generated successfully.');
+        // console.log('Employees: ' + employees);
     });
 };
 
