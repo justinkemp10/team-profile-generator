@@ -4,17 +4,17 @@ const Manager = require("./manager");
 
 function managerRender(res) {
     return `
-    <div class="card" style="width: 14rem;">
+    <div class="card mr-3 mb-3" style="width: 16rem;">
         <div class="card-header bg-primary text-white font-weight-bold">
-            <h3>${res.name}</h3>
-            <h5>Manager</h5>
+            <h3 class"text-capitalize">${res.name}</h3>
+            <i class="fas fa-mug-hot"></i><h5>Manager</h5>
         </div>
         <div class="card-body d-flex justify-content-center">
             <div class="card" style="width: 11rem;">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${res.id}</li>
-                    <li class="list-group-item">Email: ${res.email}</li>
-                    <li class="list-group-item">Office Number: ${res.officeNumber}</li>
+                    <li class="small list-group-item">ID: ${res.id}</li>
+                    <a class="small list-group-item" href="mailto: ${res.email}">${res.email}</a>
+                    <li class="small list-group-item">Office Number: ${res.officeNumber}</li>
                 </ul>
             </div>
         </div>
@@ -24,17 +24,17 @@ function managerRender(res) {
 
 function engineerRender(res) {
     return `
-    <div class="card" style="width: 14rem;">
+    <div class="card mr-3 mb-3" style="width: 16rem;">
         <div class="card-header bg-primary text-white font-weight-bold">
-            <h3>${res.name}</h3>
-            <h5>Engineer</h5>
+            <h3 class"text-capitalize">${res.name}</h3>
+            <i class="fas fa-glasses"></i><h5>Engineer</h5>
         </div>
         <div class="card-body d-flex justify-content-center">
             <div class="card" style="width: 11rem;">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${res.id}</li>
-                    <li class="list-group-item">Email: ${res.email}</li>
-                    <li class="list-group-item">GitHub: ${res.github}</li>
+                    <li class="small list-group-item">ID: ${res.id}</li>
+                    <a class="small list-group-item" href="mailto: ${res.email}">${res.email}</a>
+                    <li class="small list-group-item">GitHub: <span><a href="https://github.com/${res.github}" target="_blank">${res.github}</a></span> </li>
                 </ul>
             </div>
         </div>
@@ -44,17 +44,17 @@ function engineerRender(res) {
 
 function internRender(res) {
     return `
-    <div class="card" style="width: 14rem;">
+    <div class="card mr-3 mb-3" style="width: 16rem;">
         <div class="card-header bg-primary text-white font-weight-bold">
-            <h3>${res.name}</h3>
-            <h5>Intern</h5>
+            <h3 class"text-capitalize">${res.name}</h3>
+            <i class="fas fa-user-graduate"></i><h5>Intern</h5>
         </div>
         <div class="card-body d-flex justify-content-center">
             <div class="card" style="width: 11rem;">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID: ${res.id}</li>
-                    <li class="list-group-item">Email: ${res.email}</li>
-                    <li class="list-group-item">School: ${res.school}</li>
+                    <li class="small list-group-item">ID: ${res.id}</li>
+                    <a class="small list-group-item" href="mailto: ${res.email}">${res.email}</a>
+                    <li class="small list-group-item">School: ${res.school}</li>
                 </ul>
             </div>
         </div>
@@ -69,13 +69,13 @@ function generateMarkdown(data) {
     
     for (var i = 0; i < data.length; i++) {
         // console.log('Employees: ', data[i]);
-        if (data[i] === Manager) {
+        if (data[i] instanceof Manager) {
             htmlVariable += managerRender(data[i]);
         }
-        else if (data[i] === Engineer) {
+        else if (data[i] instanceof Engineer) {
             htmlVariable += engineerRender(data[i]);
         }
-        else if (data[i] === Intern) {
+        else if (data[i] instanceof Intern) {
             htmlVariable += internRender(data[i]);
         }
     }
@@ -90,10 +90,14 @@ function generateMarkdown(data) {
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
+    <script src="https://kit.fontawesome.com/4ea55cf5b2.js" crossorigin="anonymous"></script>
     </head>
     <body class="min-100-vh flex-column">
+    <header class="bg-danger min-100-vh align-middle" style="height: 10rem">
+        <h1 class="text-white text-center pt-5">My Team</h1>
+    </header>
     <main class="flex-row justify-center align-center col-auto p-4 bg-light">
-        <div class="card-container">
+        <div class="row container-fluid justify-content-center">
             ${htmlVariable}
         </div>
     </main>
