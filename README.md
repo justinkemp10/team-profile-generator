@@ -29,4 +29,4 @@ THEN I exit the application, and the HTML is generated
 Here is a link to the walkthrough video: [Walkthrough Video]()
 
 
-Here is a link to the application repository: [Team Profile Generator](https://github.com/justinkemp10/readme-generator)
+Here is a link to the application repository: [Team Profile Generator](https://github.com/justinkemp10/team-profile-generator)
