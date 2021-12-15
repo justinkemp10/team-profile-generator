@@ -1,6 +1,6 @@
-const Engineer = require("./engineer");
-const Intern = require("./intern");
-const Manager = require("./manager");
+const Engineer = require("../classes/engineer");
+const Intern = require("../classes/intern");
+const Manager = require("../classes/manager");
 
 function managerRender(res) {
     return `
