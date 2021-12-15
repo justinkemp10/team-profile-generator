@@ -7,7 +7,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const jest = require("jest");
 
-const generateMarkdown = require("./classes/generateMarkdown");
+const generateMarkdown = require("./dist/generateMarkdown");
 
 const employees = [];
 
